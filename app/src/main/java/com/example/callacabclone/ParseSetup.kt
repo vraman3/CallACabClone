@@ -4,6 +4,8 @@ import android.app.Application
 import android.util.Log
 import com.parse.Parse
 import com.parse.ParseObject
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 
 class ParseSetup: Application() {
 
@@ -14,6 +16,18 @@ class ParseSetup: Application() {
         //appId: "df510d952d8b4bc49dbef8dcf86380aa51117362",
         //masterKey: "551edc3f932c7e41cd8fbb03f6b9f1379bbb42dc",
         //serverURL: "http://18.219.114.244:80/parse",
+
+        // Use for troubleshooting -- remove this line for production
+        Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG)
+
+        // Use for monitoring Parse OkHttp traffic
+        // Can be Level.BASIC, Level.HEADERS, or Level.BODY
+        // See http://square.github.io/okhttp/3.x/logging-interceptor/ to see the options.
+        val builder = OkHttpClient.Builder()
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        builder.networkInterceptors().add(httpLoggingInterceptor)
+
 
         Parse.initialize(Parse.Configuration.Builder (this)
             .applicationId("df510d952d8b4bc49dbef8dcf86380aa51117362")
@@ -30,5 +44,13 @@ class ParseSetup: Application() {
         nameValueObject.saveInBackground {
             Log.d("DEBUG", "Object saved. Id: " + nameValueObject.objectId)
         }
+
+        /*
+        * ParseUser.enableAutomaticUser();
+          ParseACL defaultACL = new ParseACL();
+          defaultACL.setPublicReadAccess(true);
+          defaultACL.setPublicWriteAccess(true);
+          ParseACL.setDefaultACL(defaultACL, true);
+        * */
     }
 }

@@ -24,7 +24,8 @@ android {
 }
 
 dependencies {
-    compile 'com.parse:parse-android:1.15.7'
+    implementation 'com.parse:parse-android:1.15.7'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1' // For logging and api calls to logcat
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
