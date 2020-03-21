@@ -39,6 +39,7 @@ class ParseSetup: Application() {
 //        val client = builder.build()
 //        val client = Parse.Configuration.Builder( builder).build()
 
+        // With OkHttp
         Parse.initialize(Parse.Configuration.Builder (this)
             .applicationId("df510d952d8b4bc49dbef8dcf86380aa51117362")
             .clientKey("551edc3f932c7e41cd8fbb03f6b9f1379bbb42dc")
@@ -46,6 +47,15 @@ class ParseSetup: Application() {
             .server("http://18.219.114.244:80/parse/")
             .build()
         )
+
+        // Without OkHttp
+//        Parse.initialize(Parse.Configuration.Builder (this)
+//            .applicationId("df510d952d8b4bc49dbef8dcf86380aa51117362")
+//            .clientKey("551edc3f932c7e41cd8fbb03f6b9f1379bbb42dc")
+//            .server("http://18.219.114.244:80/parse/")
+//            .build()
+//        )
+
 
         val nameValueObject = ParseObject("NameValue")
         nameValueObject.put("name", "vish")
