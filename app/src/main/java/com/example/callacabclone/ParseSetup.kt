@@ -4,7 +4,9 @@ import android.app.Application
 import android.util.Log
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
 import com.parse.Parse
+import com.parse.ParseACL
 import com.parse.ParseObject
+import com.parse.ParseUser
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
@@ -54,12 +56,11 @@ class ParseSetup: Application() {
             Log.d("DEBUG", "Object saved. Id: " + nameValueObject.objectId)
         }
 
-        /*
-        * ParseUser.enableAutomaticUser();
-          ParseACL defaultACL = new ParseACL();
-          defaultACL.setPublicReadAccess(true);
-          defaultACL.setPublicWriteAccess(true);
-          ParseACL.setDefaultACL(defaultACL, true);
-        * */
+        ParseUser.enableAutomaticUser()
+        val defaultACL = ParseACL()
+        defaultACL.publicReadAccess = true // .setPublicReadAccess(true)
+        defaultACL.publicWriteAccess = true // setPublicWriteAccess(true)
+        ParseACL.setDefaultACL(defaultACL, true)
+
     }
 }
