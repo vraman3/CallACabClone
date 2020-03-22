@@ -13,6 +13,10 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.util.Log
 import com.parse.*
 import kotlinx.android.synthetic.main.activity_main.*
+import android.content.Intent
+import com.parse.ParseUser
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -43,7 +47,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun redirectActivity() {
-
+        if (ParseUser.getCurrentUser().get("riderOrDriver") == "rider") {
+            //Log.i("Test", "I reached here")
+            val intent = Intent(applicationContext, RiderActivity::class.java)
+            startActivity(intent)
+        } else {
+            //val intent = Intent(applicationContext, ViewRequestsActivity::class.java)
+            //startActivity(intent)
+        }
     }
 
     fun startButton(view: View) {
