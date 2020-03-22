@@ -30,13 +30,13 @@ class MainActivity : AppCompatActivity() {
 
     fun startButton(view: View) {
         loginSwitch
-        //val userStudentSwitch = findViewById(R.id.) as Switch
+        //val riderDriverSwitch = findViewById(R.id.) as Switch
         Log.i("Switch Value", loginSwitch.isChecked.toString())
 
-        var userType = "user"
+        var userType = "rider"
 
         if (loginSwitch.isChecked) {
-            userType = "student"
+            userType = "driver"
         }
 
         if(ParseUser.getCurrentUser() == null) {
@@ -46,13 +46,15 @@ class MainActivity : AppCompatActivity() {
             Log.d("DEBUG", ParseUser.getCurrentUser().toString())
         }
 
-
-        ParseUser.getCurrentUser().put("userOrStudent", userType)
-        ParseUser.getCurrentUser().saveInBackground { object: SaveCallback{
-            override fun done(e:ParseException) {
-                Log.d("Info", "Redirecting as $userType")
+        //Log.d("DEBUG", ParseUser.getCurrentUser().objectId.toString())
+        ParseUser.getCurrentUser().put("riderOrDriver", userType)
+        ParseUser.getCurrentUser().saveInBackground {
+            object : SaveCallback {
+                override fun done(e: ParseException?) {
+                    Log.d("Info", "Redirecting as $userType")
+                }
             }
-        } }
+        }
 
 //        ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
 //            @Override
