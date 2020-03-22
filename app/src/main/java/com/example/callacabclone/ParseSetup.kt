@@ -57,14 +57,14 @@ class ParseSetup: Application() {
         )
 
 
-        val nameValueObject = ParseObject("NameValue")
-        nameValueObject.put("name", "vish")
-        nameValueObject.put("value", "9001")
-        nameValueObject.put("etc","random field")
-
-        nameValueObject.saveInBackground {
-            Log.d("DEBUG", "Object saved. Id: " + nameValueObject.objectId)
-        }
+//        val nameValueObject = ParseObject("NameValue")
+//        nameValueObject.put("name", "vish")
+//        nameValueObject.put("value", "9001")
+//        nameValueObject.put("etc","random field")
+//
+//        nameValueObject.saveInBackground {
+//            Log.d("DEBUG", "Object saved. Id: " + nameValueObject.objectId)
+//        }
 
         ParseUser.enableAutomaticUser()
         val defaultACL = ParseACL()
