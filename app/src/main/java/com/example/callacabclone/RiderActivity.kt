@@ -16,11 +16,19 @@ import android.location.Location
 import android.location.LocationListener
 import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.parse.*
+import com.parse.ParseObject
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 
 class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -110,20 +118,52 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun callCab(view: View) {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.toFloat(), locationListener)
 
-            var lastKnownLocation: Location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        Log.d("Debug","Call a cab")
 
-            if(lastKnownLocation != null) {
-                val request = ParseObject("Request")
+        var requestColumnName = "Request"
+        if(requestActive) {
+            var requestActiveQuery = ParseQuery<ParseObject>(requestColumnName)
+            requestActiveQuery.whereEqualTo("username", ParseUser.getCurrentUser().username)
+
+            requestActiveQuery.findInBackground(object: FindCallback<ParseObject> {
+                override fun done(objects: MutableList<ParseObject>, e: ParseException) {
+                    if(e == null) {
+                        if(objects.isNotEmpty()) {
+                            for (`object` in objects) {
+                                `object`.deleteInBackground {
+                                    Log.d("DEBUG", "Previous request deleted!")
+                                }
+                            }
+                            requestActive = false
+                            callCabButton.text = "Call Cab"
+                        }
+                    }
+                }
+            })
+
+
+        }else if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                0,
+                0.toFloat(),
+                locationListener
+            )
+
+            var lastKnownLocation: Location =
+                locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+            if (lastKnownLocation != null) {
+                val request = ParseObject(requestColumnName)
                 request.put("username", ParseUser.getCurrentUser().username)
 
-                val parseGeoPoint: ParseGeoPoint = ParseGeoPoint(lastKnownLocation.latitude, lastKnownLocation.longitude)
+                val parseGeoPoint: ParseGeoPoint =
+                    ParseGeoPoint(lastKnownLocation.latitude, lastKnownLocation.longitude)
 
                 request.put("location", parseGeoPoint)
 
-                request.saveInBackground(object: SaveCallback {
+                request.saveInBackground(object : SaveCallback {
                     override fun done(e: ParseException?) {
                         callCabButton.text = "Cancel Cab"
                         requestActive = true
