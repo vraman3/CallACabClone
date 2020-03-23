@@ -18,9 +18,9 @@ import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.content.ContextCompat
-
-
+import com.parse.*
 
 
 class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -110,7 +110,29 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun callCab(view: View) {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.toFloat(), locationListener)
 
+            var lastKnownLocation: Location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+            if(lastKnownLocation != null) {
+                val request = ParseObject("Request")
+                request.put("username", ParseUser.getCurrentUser().username)
+
+                val parseGeoPoint: ParseGeoPoint = ParseGeoPoint(lastKnownLocation.latitude, lastKnownLocation.longitude)
+
+                request.put("location", parseGeoPoint)
+
+                request.saveInBackground(object: SaveCallback {
+                    override fun done(e: ParseException?) {
+                        callCabButton.text = "Cancel Cab"
+                        requestActive = true
+                    }
+                })
+            } else {
+                Toast.makeText(this, "Could not find location. Try again later", Toast.LENGTH_SHORT)
+            }
+        }
     }
 
     fun updateMap(location: Location) {
