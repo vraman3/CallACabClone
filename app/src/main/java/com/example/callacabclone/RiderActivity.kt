@@ -12,18 +12,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import android.location.LocationManager
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.content.Context.LOCATION_SERVICE
 import android.location.Location
 import android.location.LocationListener
-import android.util.Log
-import android.Manifest.permission
-import android.Manifest.permission.ACCESS_FINE_LOCATION
 import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
+import android.view.View
+import android.widget.Button
 import androidx.core.content.ContextCompat
 
 
@@ -34,27 +28,23 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     lateinit var locationManager: LocationManager
     lateinit var locationListener: LocationListener
+    lateinit var callCabButton: Button
+    var requestActive: Boolean = false
     //var locationManager: LocationManager? = null
     //var locationListener: LocationListener? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rider)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+            .findFragmentById(R.id.riderActivityLayout) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        callCabButton = findViewById<Button>(R.id.callCabButton)
     }
 
-    fun updateMap(location: Location) {
-
-        Log.d("DEBUG", "TEST LOCATION")
-        val userLocation = LatLng(location.latitude,location.longitude)
-
-        mMap.clear()
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.toFloat()))
-        mMap.addMarker(MarkerOptions().position(userLocation).title("You are here!"))
-    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -102,4 +92,35 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
 //        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int,permissions: Array<out String>,grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if(requestCode == 1) {
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0.toFloat(), locationListener)
+
+                    var lastKnownLocation: Location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+                    updateMap(lastKnownLocation)
+                }
+            }
+        }
+    }
+
+    fun callCab(view: View) {
+
+    }
+
+    fun updateMap(location: Location) {
+
+//        Log.d("DEBUG", "TEST LOCATION")
+        val userLocation = LatLng(location.latitude,location.longitude)
+
+        mMap.clear()
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.toFloat()))
+        mMap.addMarker(MarkerOptions().position(userLocation).title("You are here!"))
+    }
+
 }
