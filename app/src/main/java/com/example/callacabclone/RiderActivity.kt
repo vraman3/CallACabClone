@@ -205,6 +205,13 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(userLocation).title("You are here!"))
     }
 
+    fun homeRider(view: View){
+        //ParseUser.logOut()
+
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
     fun logoutRider(view: View){
         //ParseUser.logOut()
 
