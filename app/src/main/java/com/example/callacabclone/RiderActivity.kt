@@ -2,6 +2,7 @@ package com.example.callacabclone
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
@@ -204,4 +205,10 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(userLocation).title("You are here!"))
     }
 
+    fun logoutRider(view: View){
+        //ParseUser.logOut()
+
+        //val intent = Intent(this, MainActivity::class.java)
+        //startActivity(intent)
+    }
 }
