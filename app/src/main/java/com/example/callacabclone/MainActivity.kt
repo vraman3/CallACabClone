@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             if(ParseUser.getCurrentUser().get("riderOrDriver") != null ) {
                 Log.i("INFO", "Already logged in as: " + ParseUser.getCurrentUser().get("riderOrDriver"))
 
-                redirectActivity()
+                //redirectActivity()
             }
         }
     }
@@ -58,30 +58,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startButton(view: View) {
-        loginSwitch
-        //val riderDriverSwitch = findViewById(R.id.) as Switch
+
         Log.i("Switch Value", loginSwitch.isChecked.toString())
 
-        var userType = "rider"
+        if(ParseUser.getCurrentUser() != null) {
+            redirectActivity()
+        } else {
+            var userType: String// = "rider"
 
-        if (loginSwitch.isChecked) {
-            userType = "driver"
-        }
+            if (loginSwitch.isChecked) {
+                userType = "driver"
+            } else {
+                userType = "rider"
+            }
 
-//        if(ParseUser.getCurrentUser() == null) {
-//            Log.d("DEBUG", "This is NULLLLLLLLLLLLLL")
-//
-//        } else {
-//            Log.d("DEBUG", ParseUser.getCurrentUser().toString())
-//        }
-
-        //Log.d("DEBUG", ParseUser.getCurrentUser().objectId.toString())
-        ParseUser.getCurrentUser().put("riderOrDriver", userType)
-        ParseUser.getCurrentUser().saveInBackground {
-            object : SaveCallback {
-                override fun done(e: ParseException?) {
-                    Log.d("Info", "Redirecting as $userType")
-                    redirectActivity()
+            ParseUser.getCurrentUser().put("riderOrDriver", userType)
+            ParseUser.getCurrentUser().saveInBackground {
+                object : SaveCallback {
+                    override fun done(e: ParseException?) {
+                        Log.d("Info", "Redirecting as $userType")
+                        redirectActivity()
+                    }
                 }
             }
         }
