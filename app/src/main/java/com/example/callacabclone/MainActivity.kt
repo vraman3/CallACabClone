@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         Log.i("Switch Value", loginSwitch.isChecked.toString())
 
-        if(ParseUser.getCurrentUser() != null) {
+        if(ParseUser.getCurrentUser().get("riderOrDriver") != null) {
             redirectActivity()
         } else {
             var userType: String// = "rider"
