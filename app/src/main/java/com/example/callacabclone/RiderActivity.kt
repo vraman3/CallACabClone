@@ -126,21 +126,40 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
             var requestActiveQuery = ParseQuery<ParseObject>(requestColumnName)
             requestActiveQuery.whereEqualTo("username", ParseUser.getCurrentUser().username)
 
-            requestActiveQuery.findInBackground(object: FindCallback<ParseObject> {
-                override fun done(objects: MutableList<ParseObject>, e: ParseException) {
-                    if(e == null) {
-                        if(objects.isNotEmpty()) {
-                            for (`object` in objects) {
-                                `object`.deleteInBackground {
-                                    Log.d("DEBUG", "Previous request deleted!")
-                                }
-                            }
-                            requestActive = false
-                            callCabButton.text = "Call Cab"
-                        }
+            Log.d("DEBUG",ParseUser.getCurrentUser().username)
+
+            var results = requestActiveQuery.find()
+            var counter = results.size
+
+            if(results.isNotEmpty()) {
+                for(`result` in results) {
+                    `result`.deleteInBackground{
+                        Log.d("DEBUG", "Previous request deleted!")
+                        requestActive = false
+                        callCabButton.text = "Call Cab"
                     }
                 }
-            })
+            }
+//            requestActiveQuery.findInBackground(object: FindCallback<ParseObject> {
+//                override fun done(objects: MutableList<ParseObject>, e: ParseException) {
+//                    Log.d("DEBUG", e.toString())
+//                    if(e == null) {
+//                        Log.d("DEBUG", "No exception!")
+//                        if(objects.isNotEmpty()) {
+//                            Log.d("DEBUG", "Objects exist!")
+//                            for (`object` in objects) {
+//                                `object`.deleteInBackground {
+//                                    Log.d("DEBUG", "Previous request deleted!")
+//                                }
+//                            }
+//                            requestActive = false
+//                            callCabButton.text = "Call Cab"
+//                        }
+//                    }else {
+//                        e.printStackTrace()
+//                    }
+//                }
+//            })
 
 
         }else if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
