@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         if (ParseUser.getCurrentUser().get("riderOrDriver") == "rider") {
             //Log.i("Test", "I reached here")
             val intent = Intent(applicationContext, RiderActivity::class.java)
+            // DEBUG THIS
             startActivity(intent)
         } else {
             //val intent = Intent(applicationContext, ViewRequestsActivity::class.java)
