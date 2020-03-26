@@ -1,0 +1,40 @@
+package com.example.callacabclone
+
+import android.provider.ContactsContract
+import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+
+class RequestRecyclerAdapter(private val photos:ArrayList<ContactsContract.CommonDataKinds.Photo>) : RecyclerView.Adapter<PhotoHolder>(){
+
+    override fun onBindViewHolder(holder: PhotoHolder, position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getItemCount() = photos.size
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
+            PhotoHolder {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+}
+
+// Class PhotoHolder
+class PhotoHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
+
+    private var view: View = v
+    private var photo: ContactsContract.CommonDataKinds.Photo? = null
+
+    init {
+        v.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        Log.d("RecyclerView", "CLICK!")
+    }
+
+    companion object {
+        private val PHOTO_KEY = "PHOTO"
+    }
+}
