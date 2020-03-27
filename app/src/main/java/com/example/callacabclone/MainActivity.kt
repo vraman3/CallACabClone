@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
 //        if (true) {
         var userType: String// = "rider"
 
+
         if (loginSwitch.isChecked) {
             userType = "driver"
         } else {
