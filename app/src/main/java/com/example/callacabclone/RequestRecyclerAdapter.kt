@@ -1,5 +1,6 @@
 package com.example.callacabclone
 
+import android.content.Intent
 import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
@@ -32,6 +33,8 @@ class PhotoHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
 
     override fun onClick(v: View?) {
         Log.d("RecyclerView", "CLICK!")
+        val context = itemView.context
+        val showPhotoIntent = Intent(context, PhotoActivity::class.java)
     }
 
     companion object {
