@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
             override fun done(e: ParseException?) {
                 Log.d("Info", "Redirecting as $userType")
                 redirectActivity()
+                // Comment for commit
             }
         })
 //        }
