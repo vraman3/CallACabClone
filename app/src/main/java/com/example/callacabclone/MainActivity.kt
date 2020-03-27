@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
 
         Log.d("Switch Value", loginSwitch.isChecked.toString())
 
+
 //        if(ParseUser.getCurrentUser().get("riderOrDriver") == null) {
 ////            redirectActivity()
 //        } else
