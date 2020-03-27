@@ -1,13 +1,12 @@
 package com.example.callacabclone
 
 import android.content.Intent
-import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class RequestRecyclerAdapter(private val photos:ArrayList<ContactsContract.CommonDataKinds.Photo>) : RecyclerView.Adapter<PhotoHolder>(){
+class RequestRecyclerAdapter(private val photos:ArrayList<Photo>) : RecyclerView.Adapter<PhotoHolder>(){
 
     override fun onBindViewHolder(holder: PhotoHolder, position: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -25,7 +24,7 @@ class RequestRecyclerAdapter(private val photos:ArrayList<ContactsContract.Commo
 class PhotoHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
 
     private var view: View = v
-    private var photo: ContactsContract.CommonDataKinds.Photo? = null
+    private var photo: Photo? = null
 
     init {
         v.setOnClickListener(this)
