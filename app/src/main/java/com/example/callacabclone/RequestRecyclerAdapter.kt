@@ -14,9 +14,9 @@ class RequestRecyclerAdapter(private val photos:ArrayList<ContactsContract.Commo
 
     override fun getItemCount() = photos.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
-            PhotoHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoHolder {
+        val inflatedView = parent.inflate(R.layout.request_recyclerview_item_row, false)
+        return PhotoHolder(inflatedView)
     }
 }
 
