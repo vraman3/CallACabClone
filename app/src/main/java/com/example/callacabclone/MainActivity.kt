@@ -48,43 +48,39 @@ class MainActivity : AppCompatActivity() {
 
     fun redirectActivity() {
         if (ParseUser.getCurrentUser().get("riderOrDriver") == "rider") {
-            Log.i("DEBUG", "Rider redirection")
+            //Log.i("Test", "I reached here")
             val intent = Intent(applicationContext, RiderActivity::class.java)
-            // DEBUG THIS
             startActivity(intent)
-        } else if((ParseUser.getCurrentUser().get("riderOrDriver") == "driver")){
-            Log.i("DEBUG","Driver redirection")
-            val intent = Intent(applicationContext, ViewRequestsActivity::class.java)
-            startActivity(intent)
+        } else {
+            //val intent = Intent(applicationContext, ViewRequestsActivity::class.java)
+            //startActivity(intent)
         }
     }
 
     fun startButton(view: View) {
 
-        Log.d("Switch Value", loginSwitch.isChecked.toString())
+        Log.i("Switch Value", loginSwitch.isChecked.toString())
 
-
-//        if(ParseUser.getCurrentUser().get("riderOrDriver") == null) {
-////            redirectActivity()
-//        } else
-//        if (true) {
-        var userType: String// = "rider"
-
-
-        if (loginSwitch.isChecked) {
-            userType = "driver"
+        if(ParseUser.getCurrentUser().get("riderOrDriver") != null) {
+            redirectActivity()
         } else {
-            userType = "rider"
-        }
+            var userType: String// = "rider"
 
-        ParseUser.getCurrentUser().put("riderOrDriver", userType)
-        ParseUser.getCurrentUser().saveInBackground(object : SaveCallback {
-            override fun done(e: ParseException?) {
-                Log.d("Info", "Redirecting as $userType")
-                redirectActivity()
-                // Comment for commit
+            if (loginSwitch.isChecked) {
+                userType = "driver"
+            } else {
+                userType = "rider"
             }
-        })
-//        }
+
+            ParseUser.getCurrentUser().put("riderOrDriver", userType)
+            ParseUser.getCurrentUser().saveInBackground {
+                object : SaveCallback {
+                    override fun done(e: ParseException?) {
+                        Log.d("Info", "Redirecting as $userType")
+                        redirectActivity()
+                    }
+                }
+            }
+        }
     }
 }
