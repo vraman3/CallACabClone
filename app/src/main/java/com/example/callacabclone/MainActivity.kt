@@ -48,40 +48,40 @@ class MainActivity : AppCompatActivity() {
 
     fun redirectActivity() {
         if (ParseUser.getCurrentUser().get("riderOrDriver") == "rider") {
-            //Log.i("Test", "I reached here")
+            Log.i("DEBUG", "Rider redirection")
             val intent = Intent(applicationContext, RiderActivity::class.java)
             // DEBUG THIS
             startActivity(intent)
-        } else {
-            //val intent = Intent(applicationContext, ViewRequestsActivity::class.java)
-            //startActivity(intent)
+        } else if((ParseUser.getCurrentUser().get("riderOrDriver") == "driver")){
+            Log.i("DEBUG","Driver redirection")
+            val intent = Intent(applicationContext, ViewRequestsActivity::class.java)
+            startActivity(intent)
         }
     }
 
     fun startButton(view: View) {
 
-        Log.i("Switch Value", loginSwitch.isChecked.toString())
+        Log.d("Switch Value", loginSwitch.isChecked.toString())
 
-        if(ParseUser.getCurrentUser().get("riderOrDriver") != null) {
-            redirectActivity()
+//        if(ParseUser.getCurrentUser().get("riderOrDriver") == null) {
+////            redirectActivity()
+//        } else
+//        if (true) {
+        var userType: String// = "rider"
+
+        if (loginSwitch.isChecked) {
+            userType = "driver"
         } else {
-            var userType: String// = "rider"
-
-            if (loginSwitch.isChecked) {
-                userType = "driver"
-            } else {
-                userType = "rider"
-            }
-
-            ParseUser.getCurrentUser().put("riderOrDriver", userType)
-            ParseUser.getCurrentUser().saveInBackground {
-                object : SaveCallback {
-                    override fun done(e: ParseException?) {
-                        Log.d("Info", "Redirecting as $userType")
-                        redirectActivity()
-                    }
-                }
-            }
+            userType = "rider"
         }
+
+        ParseUser.getCurrentUser().put("riderOrDriver", userType)
+        ParseUser.getCurrentUser().saveInBackground(object : SaveCallback {
+            override fun done(e: ParseException?) {
+                Log.d("Info", "Redirecting as $userType")
+                redirectActivity()
+            }
+        })
+//        }
     }
 }
