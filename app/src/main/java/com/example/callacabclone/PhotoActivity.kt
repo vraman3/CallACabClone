@@ -2,6 +2,8 @@ package com.example.callacabclone
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_photo.*
 
 class PhotoActivity : AppCompatActivity() {
 
@@ -12,7 +14,9 @@ class PhotoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_photo)
 
         selectedPhoto = intent.getSerializableExtra(PHOTO_KEY) as Photo
-        
+        Picasso.with(this).load(selectedPhoto?.url).into(photoImageView)
+
+        photoDescription?.text = selectedPhoto?.explanation
     }
 
     companion object {
