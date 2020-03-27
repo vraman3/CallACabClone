@@ -5,11 +5,14 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.request_recyclerview_item_row.view.*
 
 class RequestRecyclerAdapter(private val photos:ArrayList<Photo>) : RecyclerView.Adapter<PhotoHolder>(){
 
     override fun onBindViewHolder(holder: PhotoHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val itemPhoto = photos[position]
+        holder.bindPhoto(itemPhoto)
     }
 
     override fun getItemCount() = photos.size
@@ -34,6 +37,15 @@ class PhotoHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         Log.d("RecyclerView", "CLICK!")
         val context = itemView.context
         val showPhotoIntent = Intent(context, PhotoActivity::class.java)
+        showPhotoIntent.putExtra(PHOTO_KEY, photo)
+        context.startActivity(showPhotoIntent)
+    }
+
+    fun bindPhoto(photo: Photo) {
+        this.photo = photo
+        Picasso.with(view.context).load(photo.url).into(view.itemImage)
+        view.itemDate.text = photo.humanDate
+        view.itemDescription.text = photo.explanation
     }
 
     companion object {
