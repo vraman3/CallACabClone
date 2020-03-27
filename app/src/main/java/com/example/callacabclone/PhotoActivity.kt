@@ -10,5 +10,12 @@ class PhotoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photo)
+
+        selectedPhoto = intent.getSerializableExtra(PHOTO_KEY) as Photo
+        
+    }
+
+    companion object {
+        private val PHOTO_KEY = "PHOTO"
     }
 }
