@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, RiderActivity::class.java)
             startActivity(intent)
         } else {
-            //val intent = Intent(applicationContext, ViewRequestsActivity::class.java)
-            //startActivity(intent)
+            val intent = Intent(applicationContext, ViewRequestsActivity::class.java)
+            startActivity(intent)
         }
     }
 
