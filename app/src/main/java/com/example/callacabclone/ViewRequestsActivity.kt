@@ -1,25 +1,38 @@
 package com.example.callacabclone
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_view_requests.*
-
-data class Movie(val title: String, val year: Int, val image: String)
+//import kotlinx.android.synthetic.main.activity_view_requests.view.requestsRecyclerView
+//import kotlinx.android.synthetic.main.activity_view_requests.requestsRecyclerView
 
 class ViewRequestsActivity : AppCompatActivity() {
 
-    override fun onCreate(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?) {
+    val requestsAL:ArrayList<String> = ArrayList()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_requests)
+
+        addText()
+
+
+        requestsRecyclerView.layoutManager = LinearLayoutManager()
 
 
     }
 
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-//inflater.inflate(R.layout.activity_view_requests, container, false)
+    fun addText() {
+        requestsAL.add("request 1")
+        requestsAL.add("request 2")
+        requestsAL.add("request 3")
+        requestsAL.add("request 4")
+        requestsAL.add("request 5")
+        requestsAL.add("request 6")
+
+    }
+
 }
+
+
