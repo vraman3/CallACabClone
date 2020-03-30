@@ -13,11 +13,13 @@ data class Movie(val title: String, val year: Int, val image: String)
 
 class ViewRequestsActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_requests)
+
+
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-inflater.inflate(R.layout.activity_view_requests, container, false)
+//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+//inflater.inflate(R.layout.activity_view_requests, container, false)
 }
