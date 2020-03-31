@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, RiderActivity::class.java)
             startActivity(intent)
         } else {
-            //val intent = Intent(applicationContext, ViewRequestsActivity::class.java)
-            //startActivity(intent)
+            val intent = Intent(applicationContext, ViewRequestsActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -61,26 +61,25 @@ class MainActivity : AppCompatActivity() {
 
         Log.i("Switch Value", loginSwitch.isChecked.toString())
 
-        if(ParseUser.getCurrentUser().get("riderOrDriver") != null) {
-            redirectActivity()
+//        if(ParseUser.getCurrentUser().get("riderOrDriver") != null) {
+//            redirectActivity()
+//        } else {
+        var userType: String// = "rider"
+
+        if (loginSwitch.isChecked) {
+            userType = "driver"
         } else {
-            var userType: String// = "rider"
-
-            if (loginSwitch.isChecked) {
-                userType = "driver"
-            } else {
-                userType = "rider"
-            }
-
-            ParseUser.getCurrentUser().put("riderOrDriver", userType)
-            ParseUser.getCurrentUser().saveInBackground {
-                object : SaveCallback {
-                    override fun done(e: ParseException?) {
-                        Log.d("Info", "Redirecting as $userType")
-                        redirectActivity()
-                    }
-                }
-            }
+            userType = "rider"
         }
+
+        ParseUser.getCurrentUser().put("riderOrDriver", userType)
+        ParseUser.getCurrentUser().saveInBackground(object : SaveCallback {
+            override fun done(e: ParseException?) {
+                Log.d("Info", "Redirecting as $userType")
+                redirectActivity()
+            }
+        })
+//            }
+//        }
     }
 }
