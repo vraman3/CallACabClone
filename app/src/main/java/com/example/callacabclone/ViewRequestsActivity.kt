@@ -4,8 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_view_requests.*
-//import kotlinx.android.synthetic.main.activity_view_requests.view.requestsRecyclerView
-//import kotlinx.android.synthetic.main.activity_view_requests.requestsRecyclerView
+
 
 class ViewRequestsActivity : AppCompatActivity() {
 
@@ -17,10 +16,9 @@ class ViewRequestsActivity : AppCompatActivity() {
 
         addText()
 
+        requestsRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        requestsRecyclerView.layoutManager = LinearLayoutManager()
-
-
+        requestsRecyclerView.adapter = RequestAdapter(requestsAL, this)
     }
 
     fun addText() {
@@ -30,9 +28,7 @@ class ViewRequestsActivity : AppCompatActivity() {
         requestsAL.add("request 4")
         requestsAL.add("request 5")
         requestsAL.add("request 6")
-
     }
-
 }
 
 

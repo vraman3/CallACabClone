@@ -21,8 +21,6 @@ class RequestAdapter(val items : ArrayList<String>, val context : Context) : Rec
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder?.requestItem?.text = items.get(position)
     }
-
-
 }
 
 class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
