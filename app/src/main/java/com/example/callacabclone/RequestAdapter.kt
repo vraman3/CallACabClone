@@ -2,28 +2,34 @@ package com.example.callacabclone
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.request_list_item.view.*
 
 
-class RequestAdapter(val items : ArrayList<String>, val context : Context) : RecyclerView.Adapter<ViewHolder>() {
+class RequestAdapter(val items : ArrayList<String>, val context : Context) : RecyclerView.Adapter<MyViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.request_list_item, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+
+        val rootView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.request_list, parent, false) as TextView
+
+//        val textView = rootView.requestTextView
+
+        return MyViewHolder(rootView)
+//        return MyViewHolder(textView)
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.requestItem?.text = items.get(position)
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+//        holder?.requestItem?.text = items.get(position)
+        holder.textView.text = items[position]
     }
 }
 
-class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-
-    val requestItem = view.request_item
-}
+class MyViewHolder (val textView: TextView) : RecyclerView.ViewHolder(textView)// {
+//    val requestItem = textView.request_item
+//}
