@@ -30,5 +30,3 @@ class ViewRequestsActivity : AppCompatActivity() {
         requestsAL.add("request 6")
     }
 }
-
-

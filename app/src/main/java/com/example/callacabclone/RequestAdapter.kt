@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.request_list_item.view.*
 class RequestAdapter(val items : ArrayList<String>, val context : Context) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.request_list_item, parent, false))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.request_list_item, parent, false))
     }
 
     override fun getItemCount(): Int {
