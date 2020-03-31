@@ -15,7 +15,7 @@ class RequestAdapter(val items : ArrayList<String>, val context : Context) : Rec
             .inflate(R.layout.request_list, parent, false) as TextView
 
 //        val textView = rootView.requestTextView
-
+        // Comment for commit
         return MyViewHolder(rootView)
 //        return MyViewHolder(textView)
     }
