@@ -13,11 +13,11 @@ class RequestAdapter(val items : ArrayList<String>, val context : Context) : Rec
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
         val rootView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.request_list, parent, false)
+//            .inflate(R.layout.request_list, parent, false)
 
-        val textView = rootView.requestTextView as TextView
+//        val textView = rootView.requestTextView as TextView
 
-        return MyViewHolder(rootView.requestTextView)
+        return MyViewHolder(rootView, parent)
 //        return MyViewHolder(textView)
     }
 
@@ -27,11 +27,20 @@ class RequestAdapter(val items : ArrayList<String>, val context : Context) : Rec
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 //        holder?.requestItem?.text = items.get(position)
-        holder.textView.text = items[position]
+//        holder.textView.text = items[position]
     }
 }
 
-class MyViewHolder (val textView: TextView) : RecyclerView.ViewHolder(textView)// {
+class MyViewHolder (inflater: LayoutInflater, parent: ViewGroup) :
+    RecyclerView.ViewHolder(inflater.inflate(R.layout.request_list, parent, false)){
+
+    private lateinit var requestItemTextView:TextView
+
+    init {
+
+        requestItemTextView = itemView.requestTextView
+    }
+}
 
 // Comment for commit
 //    val requestItem = textView.request_item
