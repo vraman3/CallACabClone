@@ -25,11 +25,11 @@ class ViewRequestsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_requests)
 
-        addText()
+//        addText()
 
         requestsRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        requestsRecyclerView.adapter = RequestAdapter(requestDataObject, this)
+        requestsRecyclerView.adapter = RequestAdapter(requestDataObject)
     }
 
     fun addText() {
