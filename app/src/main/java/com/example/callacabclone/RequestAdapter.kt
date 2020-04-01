@@ -1,5 +1,6 @@
 package com.example.callacabclone
 
+import android.app.DownloadManager
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.request_list.view.*
 
 
-class RequestAdapter(val items : ArrayList<String>, val context : Context) : RecyclerView.Adapter<MyViewHolder>() {
+class RequestAdapter(val items : List<RequestDataClass>, val context : Context) : RecyclerView.Adapter<MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
@@ -26,6 +27,8 @@ class RequestAdapter(val items : ArrayList<String>, val context : Context) : Rec
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val requestVar: RequestDataClass = items[position]
+        holder.bind(requestVar)
 //        holder?.requestItem?.text = items.get(position)
 //        holder.textView.text = items[position]
     }
@@ -34,11 +37,14 @@ class RequestAdapter(val items : ArrayList<String>, val context : Context) : Rec
 class MyViewHolder (inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.request_list, parent, false)){
 
-    private lateinit var requestItemTextView:TextView
+    private var requestItemTextView:TextView
 
     init {
-
         requestItemTextView = itemView.requestTextView
+    }
+
+    fun bind(requestVar: RequestDataClass) {
+        requestItemTextView?.text = requestVar.requestTitle
     }
 }
 
