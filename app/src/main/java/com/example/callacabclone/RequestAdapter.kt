@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.request_list.view.*
 
 
-class RequestAdapter(private val items : List<RequestDataClass>)
+class RequestAdapter(private val items : MutableList<RequestDataClass>)
     : RecyclerView.Adapter<MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -19,7 +19,7 @@ class RequestAdapter(private val items : List<RequestDataClass>)
 //            .inflate(R.layout.request_list, parent, false)
 
 //        val textView = rootView.requestTextView as TextView
-        Log.d("DEBUG", "Inflating layout during onCreateViewHolder")
+//        Log.d("DEBUG", "Inflating layout during onCreateViewHolder")
         return MyViewHolder(rootView, parent)
 //        return MyViewHolder(textView)
     }
@@ -43,12 +43,12 @@ class MyViewHolder (inflater: LayoutInflater, parent: ViewGroup) :
     private var requestItemTextView:TextView
 
     init {
-        Log.d("DEBUG", "Init of MyViewHolder")
+//        Log.d("DEBUG", "Init of MyViewHolder")
         requestItemTextView = itemView.requestTextView
     }
 
     fun bind(requestVar: RequestDataClass) {
-        Log.d("DEBUG", "Binding of request")
+//        Log.d("DEBUG", "Binding of request")
         requestItemTextView?.text = requestVar.requestTitle
     }
 }
