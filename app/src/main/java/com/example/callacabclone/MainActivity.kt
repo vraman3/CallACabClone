@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(com.example.callacabclone.R.layout.activity_main)
 
+        supportActionBar?.hide()
+
         if(ParseUser.getCurrentUser() == null) {
 
             ParseAnonymousUtils.logIn(object: LogInCallback {

@@ -38,43 +38,56 @@ class ViewRequestsActivity : AppCompatActivity() {
 //    RequestDataClass("Request 3Q5"),
 //    RequestDataClass("Request x25"),
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_requests)
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_view_requests)
 
+    supportActionBar?.hide()
 //        addText()
 
-        requestsRecyclerView.layoutManager = LinearLayoutManager(this)
-        requestsRecyclerView.adapter = RequestAdapter(requestDataObject)
+    requestsRecyclerView.layoutManager = LinearLayoutManager(this)
+    requestsRecyclerView.adapter = RequestAdapter(requestDataObject)
 
-        locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        locationListener = object: LocationListener {
-            override fun onLocationChanged(location: Location) {
-                updateRequestListView(location)
-            }
+    locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    locationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
 
-            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
-
-            override fun onProviderDisabled(provider: String?) {}
-
-            override fun onProviderEnabled(provider: String?) {}
+            Log.d("DEBUG", "onCreate, onLocationChanged")
+            updateRequestListView(location)
         }
 
-        if (ContextCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                1
-            )
-        } else {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0f,locationListener)
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
 
-            val lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        override fun onProviderDisabled(provider: String?) {}
 
-            if (lastKnownLocation != null) {
-                updateRequestListView(lastKnownLocation)
-            }
+        override fun onProviderEnabled(provider: String?) {}
+    }
+
+    if (ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED
+    ) {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            1
+        )
+    } else {
+        locationManager.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER,
+            0,
+            0f,
+            locationListener
+        )
+
+        val lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+        if (lastKnownLocation != null) {
+            Log.d("DEBUG", "onCreate ")
+            updateRequestListView(lastKnownLocation)
         }
     }
+}
 
     override fun onRequestPermissionsResult(requestCode: Int,permissions: Array<out String>,grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -86,6 +99,7 @@ class ViewRequestsActivity : AppCompatActivity() {
 
                     var lastKnownLocation: Location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
+                    Log.d("DEBUG","onRequestsPermissionsResult")
                     updateRequestListView(lastKnownLocation)
                 }
             }
@@ -113,17 +127,20 @@ class ViewRequestsActivity : AppCompatActivity() {
 
             nearbyObjectsQuery.limit = 5
 
-            Log.d("DEBUG", "Before findInBackground Query")
+//            Log.d("DEBUG", "Before findInBackground Query")
             nearbyObjectsQuery.findInBackground(object : FindCallback<ParseObject> {
                 override fun done(objects: List<ParseObject>, e: ParseException?) {
-                    Log.d("DEBUG", "Inside FindCallBack")
+//                    Log.d("DEBUG", "Inside FindCallBack")
                     if (e == null) {
 
-                        Log.d("DEBUG", "No exceptions. Objects size " + objects.size)
+//                        Log.d("DEBUG", "No exceptions. Objects size " + objects.size)
                         // Try clearing requests here?
+
+                        requestDataObject.clear()
+//                        Log.d("DEBUG", "requestDataObject was cleared. Current size: " + requestDataObject.size)
                         if (objects.isNotEmpty()) {
 
-                            Log.d("DEBUG", "Objects are not empty")
+//                            Log.d("DEBUG", "Objects are not empty")
                             // Clear any earlier quests lists
 //                            requests.clear()
 //                            requestLatitudes.clear()
@@ -167,7 +184,7 @@ class ViewRequestsActivity : AppCompatActivity() {
 //                            requests.add("No students nearby")
                         }
 
-                        Log.d("DEBUG", "RecquestDataObject size: " + requestDataObject.size)
+//                        Log.d("DEBUG", "RecquestDataObject size: " + requestDataObject.size)
 //                        requestsRecyclerView.adapter = RequestAdapter(requestDataObject)//?.notifyDataSetChanged()
                         requestsRecyclerView.adapter?.notifyDataSetChanged()
 //                        arrayAdapter.notifyDataSetChanged()
