@@ -145,9 +145,10 @@ class ViewRequestsActivity : AppCompatActivity() {
                                     val distanceOneDP =
                                         Math.round(distanceInKms * 10).toDouble() / 10
 
-                                    Log.d("DEBUG", "A RequestDataClass object was added")
-//                                    requestDataObject.add(RequestDataClass(distanceOneDP.toString()
-//                                            + " kms, " + `object`.getString("username")))
+
+                                    requestDataObject.add(RequestDataClass(distanceOneDP.toString()
+                                            + " kms, " + `object`.getString("username")))
+                                    Log.d("DEBUG", "A RequestDataClass object was added. Current size: " + requestDataObject.size)
 
 
 //                                    requests.add(
@@ -166,7 +167,7 @@ class ViewRequestsActivity : AppCompatActivity() {
 //                            requests.add("No students nearby")
                         }
 
-
+                        Log.d("DEBUG", "RecquestDataObject size: " + requestDataObject.size)
 //                        requestsRecyclerView.adapter = RequestAdapter(requestDataObject)//?.notifyDataSetChanged()
                         requestsRecyclerView.adapter?.notifyDataSetChanged()
 //                        arrayAdapter.notifyDataSetChanged()
