@@ -94,7 +94,7 @@ class ViewRequestsActivity : AppCompatActivity() {
 
     fun updateRequestListView(location: Location) {
         if (location != null) {
-
+            Log.d("DEBUG", "Update List View start")
             // Clear any earlier quests lists
             // Clearing here causes a delay in clearing the requests, and momentarily the list
             // is duplicated.
@@ -116,11 +116,12 @@ class ViewRequestsActivity : AppCompatActivity() {
             Log.d("DEBUG", "Before findInBackground Query")
             nearbyObjectsQuery.findInBackground(object : FindCallback<ParseObject> {
                 override fun done(objects: List<ParseObject>, e: ParseException?) {
+                    Log.d("DEBUG", "Inside FindCallBack")
                     if (e == null) {
 
-                        Log.d("DEBUG", "No exceptions")
+                        Log.d("DEBUG", "No exceptions. Objects size " + objects.size)
                         // Try clearing requests here?
-                        if (objects.isEmpty()) {
+                        if (objects.isNotEmpty()) {
 
                             Log.d("DEBUG", "Objects are not empty")
                             // Clear any earlier quests lists
@@ -164,13 +165,17 @@ class ViewRequestsActivity : AppCompatActivity() {
 
 //                            requests.add("No students nearby")
                         }
+
+
+//                        requestsRecyclerView.adapter = RequestAdapter(requestDataObject)//?.notifyDataSetChanged()
                         requestsRecyclerView.adapter?.notifyDataSetChanged()
-                        requestsRecyclerView.adapter = RequestAdapter(requestDataObject)//?.notifyDataSetChanged()
 //                        arrayAdapter.notifyDataSetChanged()
                     }
                 }
             })
         }
+
+        Log.d("DEBUG", "Update List View end")
     }
 
     fun addText() {

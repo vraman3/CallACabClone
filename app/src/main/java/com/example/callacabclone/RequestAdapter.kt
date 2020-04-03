@@ -25,7 +25,7 @@ class RequestAdapter(private val items : MutableList<RequestDataClass>)
     }
 
     override fun getItemCount(): Int {
-        Log.d("DEBUG", "Request Data Object size:" + items.size.toString())
+//        Log.d("DEBUG", "Request Data Object size:" + items.size.toString())
         return items.size
     }
 
