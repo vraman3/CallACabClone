@@ -31,12 +31,8 @@ class ViewRequestsActivity : AppCompatActivity() {
     lateinit var locationListener: LocationListener
 
     private val requestDataObject = mutableListOf<RequestDataClass>(
-        RequestDataClass("Request E3X")
     )
-//    RequestDataClass("Request CR3"),
-//    RequestDataClass("Request 5GF")
-//    RequestDataClass("Request 3Q5"),
-//    RequestDataClass("Request x25"),
+
     override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_view_requests)
@@ -136,10 +132,11 @@ class ViewRequestsActivity : AppCompatActivity() {
 //                        Log.d("DEBUG", "No exceptions. Objects size " + objects.size)
                         // Try clearing requests here?
 
-                        requestDataObject.clear()
+
 //                        Log.d("DEBUG", "requestDataObject was cleared. Current size: " + requestDataObject.size)
                         if (objects.isNotEmpty()) {
 
+                            requestDataObject.clear()
 //                            Log.d("DEBUG", "Objects are not empty")
                             // Clear any earlier quests lists
 //                            requests.clear()
@@ -181,7 +178,7 @@ class ViewRequestsActivity : AppCompatActivity() {
                             }
                         } else {
 
-//                            requests.add("No students nearby")
+                            requestDataObject.add(RequestDataClass("No students nearby..."))
                         }
 
 //                        Log.d("DEBUG", "RecquestDataObject size: " + requestDataObject.size)
