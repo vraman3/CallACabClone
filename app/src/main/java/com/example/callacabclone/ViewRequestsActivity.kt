@@ -18,6 +18,8 @@ import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import com.parse.*
 
 
@@ -44,6 +46,11 @@ class ViewRequestsActivity : AppCompatActivity() {
         requestsRecyclerView.layoutManager = LinearLayoutManager(this)
         requestsRecyclerView.adapter = RequestAdapter(requestDataObject)
 
+        requestsRecyclerView.addOnItemClickListener(object: OnItemClickListener {
+            override fun onItemClicked(position: Int, view: View) {
+                Toast.makeText(applicationContext, "ITEM " + position + " was clicked!", Toast.LENGTH_SHORT)
+            }
+        })
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
