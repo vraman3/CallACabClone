@@ -34,28 +34,29 @@ class ViewRequestsActivity : AppCompatActivity() {
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_view_requests)
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_view_requests)
 
-    supportActionBar?.hide()
-//        addText()
+        supportActionBar?.hide()
+        requestDataObject.clear()
+        requestDataObject.add(RequestDataClass("Getting nearby drivers"))
 
-    requestsRecyclerView.layoutManager = LinearLayoutManager(this)
-    requestsRecyclerView.adapter = RequestAdapter(requestDataObject)
+        requestsRecyclerView.layoutManager = LinearLayoutManager(this)
+        requestsRecyclerView.adapter = RequestAdapter(requestDataObject)
 
-    locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    locationListener = object : LocationListener {
-        override fun onLocationChanged(location: Location) {
+        locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        locationListener = object : LocationListener {
+            override fun onLocationChanged(location: Location) {
 
-            Log.d("DEBUG", "onCreate, onLocationChanged")
-            updateRequestListView(location)
-        }
+                Log.d("DEBUG", "onCreate, onLocationChanged")
+                updateRequestListView(location)
+            }
 
-        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
 
-        override fun onProviderDisabled(provider: String?) {}
+            override fun onProviderDisabled(provider: String?) {}
 
-        override fun onProviderEnabled(provider: String?) {}
+            override fun onProviderEnabled(provider: String?) {}
     }
 
     if (ContextCompat.checkSelfPermission(
