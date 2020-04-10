@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.callacabclone.databinding.RequestListBinding
 import kotlinx.android.synthetic.main.request_list.view.*
 
-class RequestListener(val clickListener: (requestTitle: String) -> Unit) {
-    fun onClick(requestVar: RequestDataClass) = clickListener(requestVar.requestTitle)
+class RequestListener(val clickListener: (requestTitle: String?) -> Unit) {
+    fun onClick(requestVar: RequestDataClass?) = clickListener(requestVar?.requestTitle)
 }
 
 class RequestAdapter(private val items : MutableList<RequestDataClass>, val clickListener: RequestListener)
