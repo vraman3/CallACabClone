@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="request"
+            type="com.example.callacabclone.RequestDataClass" />
+        <variable
+            name="clickListener"
+            type="com.example.callacabclone.RequestListener" />
+    </data>
+
+<LinearLayout
     android:id="@+id/requestItemMainXMLLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:onClick="@{() -> clickListener.onClick(request)}">
 
-<TextView android:id="@+id/requestTextView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:textSize="20sp"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+
+    <TextView android:id="@+id/requestTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:textSize="20sp"
+        xmlns:android="http://schemas.android.com/apk/res/android" />
 
 </LinearLayout>
+</layout>

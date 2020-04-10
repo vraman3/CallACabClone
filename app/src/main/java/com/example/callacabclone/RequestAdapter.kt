@@ -1,20 +1,19 @@
 package com.example.callacabclone
 
-import android.app.DownloadManager
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.callacabclone.databinding.RequestListBinding
 import kotlinx.android.synthetic.main.request_list.view.*
 
-class RequestListener(val clickListener: (Any) -> Unit) {
+class RequestListener(val clickListener: (requestTitle: String) -> Unit) {
     fun onClick(requestVar: RequestDataClass) = clickListener(requestVar.requestTitle)
 }
 
-class RequestAdapter(private val items : MutableList<RequestDataClass>)
+class RequestAdapter(private val items : MutableList<RequestDataClass>, val clickListener: RequestListener)
     : RecyclerView.Adapter<MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -24,7 +23,7 @@ class RequestAdapter(private val items : MutableList<RequestDataClass>)
 
 //        val textView = rootView.requestTextView as TextView
 //        Log.d("DEBUG", "Inflating layout during onCreateViewHolder")
-        return MyViewHolder(rootView, parent)
+        return MyViewHolder.from(parent)
 //        return MyViewHolder(textView)
     }
 
@@ -35,30 +34,42 @@ class RequestAdapter(private val items : MutableList<RequestDataClass>)
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val requestVar: RequestDataClass = items[position]
-        holder.bind(requestVar)
+        holder.bind(requestVar, clickListener)
 //        holder?.requestItem?.text = items.get(position)
 //        holder.textView.text = items[position]
     }
 }
 
-class MyViewHolder (inflater: LayoutInflater, parent: ViewGroup) :
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.request_list, parent, false)), View.OnClickListener{
+class MyViewHolder (val binding: RequestListBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
-    private var requestItemTextView:TextView
+    private var requestItemTextView: TextView
 
     init {
 //        Log.d("DEBUG", "Init of MyViewHolder")
         requestItemTextView = itemView.requestTextView
-        itemView.setOnClickListener(this)
+//        itemView.setOnClickListener(this)
     }
 
-    override fun onClick(v: View?) {
-        requestItemTextView?.text = "Clicked! " + requestItemTextView.text
+//    override fun onClick(v: View?) {
+//        requestItemTextView?.text = "Clicked! " + requestItemTextView.text
+//    }
+
+    fun bind(requestVar: RequestDataClass?, clickListener: RequestListener) {
+        Log.d("DEBUG", "Binding of request")
+        requestItemTextView?.text = requestVar?.requestTitle
+        Log.d("DEBUG", "After Binding of request")
+        binding.clickListener = clickListener
+        binding.executePendingBindings()
     }
 
-    fun bind(requestVar: RequestDataClass) {
-//        Log.d("DEBUG", "Binding of request")
-        requestItemTextView?.text = requestVar.requestTitle
+    companion object {
+        fun from(parent: ViewGroup): MyViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val binding = RequestListBinding.inflate(layoutInflater, parent, false)
+            return MyViewHolder(binding)
+
+        }
     }
 }
 

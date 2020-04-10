@@ -44,7 +44,9 @@ class ViewRequestsActivity : AppCompatActivity() {
         requestDataObject.add(RequestDataClass("Getting nearby drivers"))
 
         requestsRecyclerView.layoutManager = LinearLayoutManager(this)
-        requestsRecyclerView.adapter = RequestAdapter(requestDataObject)
+        requestsRecyclerView.adapter = RequestAdapter(requestDataObject, RequestListener {requestTitle ->
+            Toast.makeText(applicationContext,"Item no. ${requestTitle}", Toast.LENGTH_SHORT )
+        })
 
 
 //        requestsRecyclerView.addOnItemClickListener(object: OnItemClickListener {
