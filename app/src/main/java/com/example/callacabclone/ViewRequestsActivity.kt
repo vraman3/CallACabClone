@@ -46,17 +46,18 @@ class ViewRequestsActivity : AppCompatActivity() {
         requestsRecyclerView.layoutManager = LinearLayoutManager(this)
         requestsRecyclerView.adapter = RequestAdapter(requestDataObject)
 
-        requestsRecyclerView.addOnItemClickListener(object: OnItemClickListener {
-            override fun onItemClicked(position: Int, view: View) {
-                Toast.makeText(applicationContext, "ITEM " + position + " was clicked!", Toast.LENGTH_SHORT)
-            }
-        })
+
+//        requestsRecyclerView.addOnItemClickListener(object: OnItemClickListener {
+//            override fun onItemClicked(position: Int, view: View) {
+//                Toast.makeText(applicationContext, "ITEM " + position + " was clicked!", Toast.LENGTH_SHORT)
+//            }
+//        })
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
 
-                Log.d("DEBUG", "onCreate, onLocationChanged")
-                updateRequestListView(location)
+//                Log.d("DEBUG", "onCreate, onLocationChanged")
+//                updateRequestListView(location)
             }
 
             override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
@@ -87,7 +88,7 @@ class ViewRequestsActivity : AppCompatActivity() {
         val lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
         if (lastKnownLocation != null) {
-            Log.d("DEBUG", "onCreate ")
+//            Log.d("DEBUG", "onCreate ")
             updateRequestListView(lastKnownLocation)
         }
     }
@@ -103,7 +104,7 @@ class ViewRequestsActivity : AppCompatActivity() {
 
                     var lastKnownLocation: Location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
-                    Log.d("DEBUG","onRequestsPermissionsResult")
+//                    Log.d("DEBUG","onRequestsPermissionsResult")
                     updateRequestListView(lastKnownLocation)
                 }
             }
@@ -112,7 +113,7 @@ class ViewRequestsActivity : AppCompatActivity() {
 
     fun updateRequestListView(location: Location) {
         if (location != null) {
-            Log.d("DEBUG", "Update List View start")
+//            Log.d("DEBUG", "Update List View start")
             // Clear any earlier quests lists
             // Clearing here causes a delay in clearing the requests, and momentarily the list
             // is duplicated.
@@ -170,7 +171,7 @@ class ViewRequestsActivity : AppCompatActivity() {
 
                                     requestDataObject.add(RequestDataClass(distanceOneDP.toString()
                                             + " kms, " + `object`.getString("username")))
-                                    Log.d("DEBUG", "A RequestDataClass object was added. Current size: " + requestDataObject.size)
+//                                    Log.d("DEBUG", "A RequestDataClass object was added. Current size: " + requestDataObject.size)
 
 
 //                                    requests.add(
@@ -198,7 +199,7 @@ class ViewRequestsActivity : AppCompatActivity() {
             })
         }
 
-        Log.d("DEBUG", "Update List View end")
+//        Log.d("DEBUG", "Update List View end")
     }
 
     fun addText() {

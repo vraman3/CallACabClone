@@ -4,11 +4,15 @@ import android.app.DownloadManager
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.request_list.view.*
 
+class RequestListener(val clickListener: (Any) -> Unit) {
+    fun onClick(requestVar: RequestDataClass) = clickListener(requestVar.requestTitle)
+}
 
 class RequestAdapter(private val items : MutableList<RequestDataClass>)
     : RecyclerView.Adapter<MyViewHolder>() {
@@ -38,13 +42,18 @@ class RequestAdapter(private val items : MutableList<RequestDataClass>)
 }
 
 class MyViewHolder (inflater: LayoutInflater, parent: ViewGroup) :
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.request_list, parent, false)){
+    RecyclerView.ViewHolder(inflater.inflate(R.layout.request_list, parent, false)), View.OnClickListener{
 
     private var requestItemTextView:TextView
 
     init {
 //        Log.d("DEBUG", "Init of MyViewHolder")
         requestItemTextView = itemView.requestTextView
+        itemView.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        requestItemTextView?.text = "Clicked! " + requestItemTextView.text
     }
 
     fun bind(requestVar: RequestDataClass) {
