@@ -45,7 +45,7 @@ class ViewRequestsActivity : AppCompatActivity() {
 
         requestsRecyclerView.layoutManager = LinearLayoutManager(this)
         requestsRecyclerView.adapter = RequestAdapter(requestDataObject, RequestListener {requestTitle ->
-            Toast.makeText(applicationContext,"Item no. ${requestTitle}", Toast.LENGTH_SHORT )
+//            Toast.makeText(applicationContext,"Item no. ${requestTitle}", Toast.LENGTH_SHORT )
         })
 
 
