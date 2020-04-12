@@ -3,13 +3,6 @@ package com.example.callacabclone
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-//import androidx.test.espresso.matcher.ViewMatchers.isChecked
-import android.R
-import android.widget.Switch
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.util.Log
 import com.parse.*
 import kotlinx.android.synthetic.main.activity_main.*

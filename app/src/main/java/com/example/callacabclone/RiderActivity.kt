@@ -24,10 +24,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.parse.*
 import com.parse.ParseObject
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
 class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
