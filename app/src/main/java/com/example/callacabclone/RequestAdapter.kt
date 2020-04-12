@@ -10,12 +10,9 @@ import com.example.callacabclone.databinding.RequestListBinding
 import kotlinx.android.synthetic.main.request_list.view.*
 
 class RequestListener(val clickListener: (requestTitle: String?) -> Unit) {
-    fun onClick(requestVar: RequestDataClass?) {
-
-        Log.d("DEBUG", " requestVar is " + requestVar.toString())
-        Log.d("DEBUG", "request Title is: " + requestVar?.requestTitle)
-//        return clickListener(requestVar.requestTitle)
-    }
+    fun onClick(requestVar: RequestDataClass?) = clickListener(requestVar?.requestTitle)
+//        Log.d("DEBUG", " requestVar is " + requestVar.toString())
+//        Log.d("DEBUG", "request Title is: " + requestVar?.requestTitle)
 }
 
 class RequestAdapter(private val items : MutableList<RequestDataClass>, val clickListener: RequestListener)
