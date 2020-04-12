@@ -44,16 +44,11 @@ class ViewRequestsActivity : AppCompatActivity() {
 
         binding.requestsRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.requestsRecyclerView.adapter = RequestAdapter(requestDataObject, RequestListener {requestTitle ->
-            Log.d("DEBUG", "View Activity onClick()" + requestTitle.toString())
+//            Log.d("DEBUG", "View Activity onClick()" + requestTitle.toString())
             Toast.makeText(applicationContext,"Item no. " + requestTitle.toString(), Toast.LENGTH_SHORT ).show()
         })
 
 
-//        requestsRecyclerView.addOnItemClickListener(object: OnItemClickListener {
-//            override fun onItemClicked(position: Int, view: View) {
-//                Toast.makeText(applicationContext, "ITEM " + position + " was clicked!", Toast.LENGTH_SHORT)
-//            }
-//        })
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
