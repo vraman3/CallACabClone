@@ -45,7 +45,7 @@ class ViewRequestsActivity : AppCompatActivity() {
         binding.requestsRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.requestsRecyclerView.adapter = RequestAdapter(requestDataObject, RequestListener {requestTitle ->
             Log.d("DEBUG", "View Activity onClick()" + requestTitle.toString())
-            Toast.makeText(applicationContext,"Item no. " + requestTitle.toString(), Toast.LENGTH_SHORT )
+            Toast.makeText(applicationContext,"Item no. " + requestTitle.toString(), Toast.LENGTH_SHORT ).show()
         })
 
 
