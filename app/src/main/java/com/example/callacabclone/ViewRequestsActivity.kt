@@ -11,8 +11,9 @@ import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_view_requests.*
 import android.util.Log
+import androidx.databinding.DataBindingUtil
+import com.example.callacabclone.databinding.ActivityViewRequestsBinding
 import com.parse.*
 
 
@@ -20,6 +21,7 @@ data class RequestDataClass(val requestTitle: String)
 
 class ViewRequestsActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityViewRequestsBinding
     val requestsAL:ArrayList<String> = ArrayList()
 
     lateinit var locationManager: LocationManager
@@ -30,14 +32,15 @@ class ViewRequestsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_requests)
+
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_view_requests)
 
         supportActionBar?.hide()
         requestDataObject.clear()
         requestDataObject.add(RequestDataClass("Getting nearby drivers"))
 
-        requestsRecyclerView.layoutManager = LinearLayoutManager(this)
-        requestsRecyclerView.adapter = RequestAdapter(requestDataObject)
+        binding.requestsRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.requestsRecyclerView.adapter = RequestAdapter(requestDataObject)
 
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         locationListener = object : LocationListener {
@@ -179,7 +182,7 @@ class ViewRequestsActivity : AppCompatActivity() {
 
 //                        Log.d("DEBUG", "RecquestDataObject size: " + requestDataObject.size)
 //                        requestsRecyclerView.adapter = RequestAdapter(requestDataObject)//?.notifyDataSetChanged()
-                        requestsRecyclerView.adapter?.notifyDataSetChanged()
+                        binding.requestsRecyclerView.adapter?.notifyDataSetChanged()
 //                        arrayAdapter.notifyDataSetChanged()
                     }
                 }
