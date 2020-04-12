@@ -22,16 +22,15 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import com.example.callacabclone.databinding.ActivityRiderBinding
 import com.parse.*
 import com.parse.ParseObject
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
 class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
 
+    private lateinit var binding: ActivityRiderBinding
     private lateinit var mMap: GoogleMap
     lateinit var locationManager: LocationManager
     lateinit var locationListener: LocationListener
@@ -43,13 +42,15 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_rider)
+
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_rider)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.riderActivityLayout) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        callCabButton = findViewById<Button>(R.id.callCabButton)
+//        callCabButton = binding.callCabButton // findViewById<Button>(R.id.callCabButton)
     }
 
     /**
@@ -135,7 +136,7 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
                     `result`.deleteInBackground{
                         Log.d("DEBUG", "Previous request deleted!")
                         requestActive = false
-                        callCabButton.text = "Call Cab"
+                        binding.callCabButton.text = "Call Cab"
                     }
                 }
             }
@@ -183,7 +184,7 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 request.saveInBackground(object : SaveCallback {
                     override fun done(e: ParseException?) {
-                        callCabButton.text = "Cancel Cab"
+                        binding.callCabButton.text = "Cancel Cab"
                         requestActive = true
                     }
                 })
