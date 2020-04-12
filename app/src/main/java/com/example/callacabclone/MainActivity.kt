@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.util.Log
 import com.parse.*
-import kotlinx.android.synthetic.main.activity_main.*
 import android.content.Intent
+import androidx.databinding.DataBindingUtil
+import com.example.callacabclone.databinding.ActivityMainBinding
 import com.parse.ParseUser
 
 
@@ -14,9 +15,12 @@ import com.parse.ParseUser
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.callacabclone.R.layout.activity_main)
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         supportActionBar?.hide()
 
@@ -54,14 +58,14 @@ class MainActivity : AppCompatActivity() {
 
     fun startButton(view: View) {
 
-        Log.i("Switch Value", loginSwitch.isChecked.toString())
+        Log.i("Switch Value", binding.loginSwitch.isChecked.toString())
 
 //        if(ParseUser.getCurrentUser().get("riderOrDriver") != null) {
 //            redirectActivity()
 //        } else {
         var userType: String// = "rider"
 
-        if (loginSwitch.isChecked) {
+        if (binding.loginSwitch.isChecked) {
             userType = "driver"
         } else {
             userType = "rider"
