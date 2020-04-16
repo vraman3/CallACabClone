@@ -8,6 +8,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,15 +18,19 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.callacabclone.databinding.ActivityViewRequestsBinding
 import com.parse.*
+import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.request_list.view.*
 
-
+//@Parcelize
+//data class RequestDataClass(val requestTitle: String) : Parcelable
 data class RequestDataClass(val requestTitle: String)
 
 class ViewRequestsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityViewRequestsBinding
     val requestsAL:ArrayList<String> = ArrayList()
+    var requestLatitude:ArrayList<Float> = ArrayList()
+    var requestLongitude:ArrayList<Float> = ArrayList()
 
     lateinit var locationManager: LocationManager
     lateinit var locationListener: LocationListener
