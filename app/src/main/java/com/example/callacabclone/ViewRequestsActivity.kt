@@ -2,6 +2,7 @@ package com.example.callacabclone
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -21,9 +22,9 @@ import com.parse.*
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.request_list.view.*
 
-//@Parcelize
-//data class RequestDataClass(val requestTitle: String) : Parcelable
-data class RequestDataClass(val requestTitle: String)
+@Parcelize
+data class RequestDataClass(val requestTitle: String) : Parcelable
+//data class RequestDataClass(val requestTitle: String)
 
 class ViewRequestsActivity : AppCompatActivity() {
 
@@ -48,9 +49,15 @@ class ViewRequestsActivity : AppCompatActivity() {
         requestDataObject.add(RequestDataClass("Getting nearby drivers"))
 
         binding.requestsRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.requestsRecyclerView.adapter = RequestAdapter(requestDataObject, RequestListener {requestTitle ->
+        binding.requestsRecyclerView.adapter = RequestAdapter(requestDataObject, RequestListener {requestTitle, requestPosition ->
 //            Log.d("DEBUG", "View Activity onClick()" + requestTitle.toString())
-            Toast.makeText(applicationContext,"Item no. " + requestTitle.toString(), Toast.LENGTH_SHORT ).show()
+            Toast.makeText(applicationContext,"Item no. " + requestTitle.toString() + " at position $requestPosition", Toast.LENGTH_SHORT ).show()
+
+            val intent = Intent(applicationContext, RiderActivity::class.java)
+            intent.putExtra("request_title", requestTitle.toString())
+//            intent.putExtra("request_object", requestDataObject)
+            Log.d("DEBUG", "Redirecting to rider activity page")
+            startActivity(intent)
         })
 
 
