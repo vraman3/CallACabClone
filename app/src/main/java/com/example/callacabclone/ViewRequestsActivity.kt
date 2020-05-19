@@ -18,6 +18,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.callacabclone.databinding.ActivityViewRequestsBinding
+
 import com.parse.*
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.request_list.view.*
@@ -50,7 +51,7 @@ class ViewRequestsActivity : AppCompatActivity() {
 
         binding.requestsRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.requestsRecyclerView.adapter = RequestAdapter(requestDataObject, RequestListener {requestTitle, requestPosition ->
-//            Log.d("DEBUG", "View Activity onClick()" + requestTitle.toString())
+//            Log.d("DEBUG", "View Activity onClick()" + requestTitle.toString())[  
             Toast.makeText(applicationContext,"Item no. " + requestTitle.toString() + " at position $requestPosition", Toast.LENGTH_SHORT ).show()
 
             val intent = Intent(applicationContext, RiderActivity::class.java)

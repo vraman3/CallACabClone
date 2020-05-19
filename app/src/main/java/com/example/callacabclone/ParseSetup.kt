@@ -52,7 +52,7 @@ class ParseSetup: Application() {
         Parse.initialize(Parse.Configuration.Builder (this)
             .applicationId("df510d952d8b4bc49dbef8dcf86380aa51117362")
             .clientKey("551edc3f932c7e41cd8fbb03f6b9f1379bbb42dc")
-            .server("http://18.219.114.244:80/parse/")
+            .server("http://3.14.127.84:80/parse/")
             .build()
         )
 
