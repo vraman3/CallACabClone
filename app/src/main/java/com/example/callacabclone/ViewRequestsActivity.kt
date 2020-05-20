@@ -37,8 +37,7 @@ class ViewRequestsActivity : AppCompatActivity() {
     lateinit var locationManager: LocationManager
     lateinit var locationListener: LocationListener
 
-    private val requestDataObject = mutableListOf<RequestDataClass>(
-    )
+    private val requestDataObject = mutableListOf<RequestDataClass>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,14 +50,24 @@ class ViewRequestsActivity : AppCompatActivity() {
 
         binding.requestsRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.requestsRecyclerView.adapter = RequestAdapter(requestDataObject, RequestListener {requestTitle, requestPosition ->
-//            Log.d("DEBUG", "View Activity onClick()" + requestTitle.toString())[  
-            Toast.makeText(applicationContext,"Item no. " + requestTitle.toString() + " at position $requestPosition", Toast.LENGTH_SHORT ).show()
 
-            val intent = Intent(applicationContext, RiderActivity::class.java)
-            intent.putExtra("request_title", requestTitle.toString())
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+                val intent = Intent(applicationContext, DriverActivity::class.java)
+                intent.putExtra("request_title", requestTitle.toString())
+
+                intent.putExtra("request_object", requestDataObject[requestPosition]);
 //            intent.putExtra("request_object", requestDataObject)
-            Log.d("DEBUG", "Redirecting to rider activity page")
-            startActivity(intent)
+                Log.d("DEBUG", "Redirecting to driver activity page")
+                startActivity(intent)
+
+            }
+
+//            Log.d("DEBUG", "View Activity onClick()" + requestTitle.toString())[
+//            Toast.makeText(applicationContext,"Item no. " + requestTitle.toString() + " at position $requestPosition", Toast.LENGTH_SHORT ).show()
+
+
         })
 
 
