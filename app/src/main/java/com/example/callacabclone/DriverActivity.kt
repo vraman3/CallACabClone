@@ -1,14 +1,15 @@
 package com.example.callacabclone
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+
 
 class DriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -35,9 +36,40 @@ class DriverActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        intent = getIntent()
+
+        val markers: ArrayList<Marker> = ArrayList()
+
+        var tmpString: String = intent.getStringExtra("request_title")
+        var incomingRequestObject: RequestDataClass = intent.getParcelableExtra("request_object")
+
+        val driverLocation = LatLng(
+            intent.getDoubleExtra("driver_latitude", 0.0),
+            intent.getDoubleExtra("driver_longitude", 0.0)
+        )
+
+        val requestLocation = LatLng( incomingRequestObject.requestLatitude, incomingRequestObject.requestLongitude )
+        Log.d("DEBUG", "driver: $driverLocation,  rider: $requestLocation")
+        markers.add(mMap.addMarker(MarkerOptions().position(driverLocation).title("Your Location")))
+        markers.add(mMap.addMarker(MarkerOptions().position(requestLocation).title("Request Location")))
+
+        val builder = LatLngBounds.Builder()
+        for (marker in markers) {
+            builder.include(marker.position)
+        }
+        val bounds: LatLngBounds = builder.build()
+
+        val width: Int = resources.displayMetrics.widthPixels
+        val height: Int = resources.displayMetrics.heightPixels
+        val padding: Int = (height * 0.20).toInt()
+
+        val cu: CameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding)
+        mMap.animateCamera(cu)
+
+        Toast.makeText(applicationContext,"Clicked request title is ${incomingRequestObject.requestTitle}", Toast.LENGTH_LONG ).show()
+        // Add a marker for the driver and move the camera
+//        val driverMarker = driverLocation
+//        mMap.addMarker(MarkerOptions().position(driverMarker).title("Driver Location"))
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(driverMarker))
     }
 }

@@ -43,6 +43,9 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        var getReqTitle = intent.getStringExtra("request_title")
+
+        Log.d("DEBUG", "Current title is: $getReqTitle")
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_rider)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -64,6 +67,8 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+
+
 
 //        LatLng userLocation = new LatLng()
         locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -97,7 +102,7 @@ class RiderActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         // Add a marker in Sydney and move the camera
 //        val sydney = LatLng(-34.0, 151.0)
-//        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+//        mMap.addMarker(MarkerOptions().position(sydney).title(getReqTitle))
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 

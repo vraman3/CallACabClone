@@ -2,36 +2,39 @@ package com.example.callacabclone
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.callacabclone.databinding.ActivityViewRequestsBinding
 import com.parse.*
-import kotlinx.android.synthetic.main.request_list.view.*
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
+data class RequestDataClass(val requestTitle: String, val requestLatitude: Double = 0.0, val requestLongitude: Double = 0.0, val username: String = "N/A") : Parcelable
 
-data class RequestDataClass(val requestTitle: String)
+//data class RequestDataClass(val requestTitle: String)
 
 class ViewRequestsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityViewRequestsBinding
     val requestsAL:ArrayList<String> = ArrayList()
+    var requestLatitude:ArrayList<Float> = ArrayList()
+    var requestLongitude:ArrayList<Float> = ArrayList()
 
     lateinit var locationManager: LocationManager
     lateinit var locationListener: LocationListener
 
-    private val requestDataObject = mutableListOf<RequestDataClass>(
-    )
+    private val requestDataObject = mutableListOf<RequestDataClass>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +46,29 @@ class ViewRequestsActivity : AppCompatActivity() {
         requestDataObject.add(RequestDataClass("Getting nearby drivers"))
 
         binding.requestsRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.requestsRecyclerView.adapter = RequestAdapter(requestDataObject, RequestListener {requestTitle ->
-//            Log.d("DEBUG", "View Activity onClick()" + requestTitle.toString())
-            Toast.makeText(applicationContext,"Item no. " + requestTitle.toString(), Toast.LENGTH_SHORT ).show()
+        binding.requestsRecyclerView.adapter = RequestAdapter(requestDataObject, RequestListener {requestTitle, requestPosition ->
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+                val lastKnownLocation =
+                    locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
+                val intent = Intent(applicationContext, DriverActivity::class.java)
+                intent.putExtra("request_title", requestTitle.toString())
+
+                intent.putExtra("request_object", requestDataObject[requestPosition]);
+                intent.putExtra("driver_latitude", lastKnownLocation.latitude);
+                intent.putExtra("driver_longitude", lastKnownLocation.longitude);
+
+                Log.d("DEBUG", "Redirecting to driver activity page")
+                startActivity(intent)
+            }
+
+//            Log.d("DEBUG", "View Activity onClick()" + requestTitle.toString())[
+//            Toast.makeText(applicationContext,"Item no. " + requestTitle.toString() + " at position $requestPosition", Toast.LENGTH_SHORT ).show()
+
+
         })
 
 
@@ -165,9 +188,19 @@ class ViewRequestsActivity : AppCompatActivity() {
                                     val distanceOneDP =
                                         Math.round(distanceInKms * 10).toDouble() / 10
 
+                                    val requestDataClassToAdd = `object`.getString("username")?.let { username ->
+                                        RequestDataClass(
+                                            distanceOneDP.toString() + " kms",
+                                            requestCurrentObjectLocation.latitude,
+                                            requestCurrentObjectLocation.longitude,
+                                            username
+                                        )}
 
-                                    requestDataObject.add(RequestDataClass(distanceOneDP.toString()
-                                            + " kms, " + `object`.getString("username")))
+                                    if (requestDataClassToAdd != null) {
+                                        requestDataObject.add(requestDataClassToAdd)
+                                    }
+//                                    requestDataObject.add(RequestDataClass(distanceOneDP.toString()
+//                                            + " kms, " + `object`.getString("username")))
 //                                    Log.d("DEBUG", "A RequestDataClass object was added. Current size: " + requestDataObject.size)
 
 
@@ -177,6 +210,7 @@ class ViewRequestsActivity : AppCompatActivity() {
 //                                        )
 //                                    )
 //
+
 //                                    requestLatitudes.add(requestCurrentObjectLocation.latitude)
 //                                    requestLongitudes.add(requestCurrentObjectLocation.longitude)
 //                                    usernames.add(`object`.getString("username"))
