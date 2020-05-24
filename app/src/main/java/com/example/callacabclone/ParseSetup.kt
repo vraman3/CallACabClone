@@ -66,7 +66,7 @@ class ParseSetup: Application() {
 //            Log.d("DEBUG", "Object saved. Id: " + nameValueObject.objectId)
 //        }
 
-        ParseUser.enableAutomaticUser()
+//        ParseUser.enableAutomaticUser()
         val defaultACL = ParseACL()
         defaultACL.publicReadAccess = true // .setPublicReadAccess(true)
         defaultACL.publicWriteAccess = true // setPublicWriteAccess(true)

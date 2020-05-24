@@ -9,8 +9,7 @@ import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import com.example.callacabclone.databinding.ActivityMainBinding
 import com.parse.ParseUser
-
-
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -71,14 +70,28 @@ class MainActivity : AppCompatActivity() {
             userType = "rider"
         }
 
-        ParseUser.getCurrentUser().put("riderOrDriver", userType)
-        ParseUser.getCurrentUser().saveInBackground(object : SaveCallback {
+        val currentUser: ParseUser = ParseUser()
+
+        currentUser.username = usernameLoginScreenEditText.toString()
+        currentUser.setPassword(passwordLoginScreenEditText.toString())
+
+        currentUser.put("riderOrDriver", userType)
+
+        currentUser.signUpInBackground(object: SignUpCallback {
             override fun done(e: ParseException?) {
-                Log.d("Info", "Redirecting as $userType")
+                Log.d("DEBUG", "Redirecting as $userType")
                 redirectActivity()
             }
         })
+
+//        ParseUser.getCurrentUser().put("riderOrDriver", userType)
+//        ParseUser.getCurrentUser().saveInBackground(object : SaveCallback {
+//            override fun done(e: ParseException?) {
+//                Log.d("Info", "Redirecting as $userType")
+//                redirectActivity()
 //            }
-//        }
+//        })
+
+
     }
 }
