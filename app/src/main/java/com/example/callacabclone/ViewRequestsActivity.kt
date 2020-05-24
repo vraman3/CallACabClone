@@ -7,24 +7,21 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.callacabclone.databinding.ActivityViewRequestsBinding
-
 import com.parse.*
 import kotlinx.android.parcel.Parcelize
-import kotlinx.android.synthetic.main.request_list.view.*
 
 @Parcelize
-data class RequestDataClass(val requestTitle: String) : Parcelable
+data class RequestDataClass(val requestTitle: String, val requestLatitude: Double = 0.0, val requestLongitude: Double = 0.0, val username: String = "N/A") : Parcelable
+
 //data class RequestDataClass(val requestTitle: String)
 
 class ViewRequestsActivity : AppCompatActivity() {
@@ -54,14 +51,18 @@ class ViewRequestsActivity : AppCompatActivity() {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
+                val lastKnownLocation =
+                    locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+
                 val intent = Intent(applicationContext, DriverActivity::class.java)
                 intent.putExtra("request_title", requestTitle.toString())
 
                 intent.putExtra("request_object", requestDataObject[requestPosition]);
-//            intent.putExtra("request_object", requestDataObject)
+                intent.putExtra("driver_latitude", lastKnownLocation.latitude);
+                intent.putExtra("driver_longitude", lastKnownLocation.longitude);
+
                 Log.d("DEBUG", "Redirecting to driver activity page")
                 startActivity(intent)
-
             }
 
 //            Log.d("DEBUG", "View Activity onClick()" + requestTitle.toString())[
@@ -187,9 +188,19 @@ class ViewRequestsActivity : AppCompatActivity() {
                                     val distanceOneDP =
                                         Math.round(distanceInKms * 10).toDouble() / 10
 
+                                    val requestDataClassToAdd = `object`.getString("username")?.let { username ->
+                                        RequestDataClass(
+                                            distanceOneDP.toString() + " kms",
+                                            requestCurrentObjectLocation.latitude,
+                                            requestCurrentObjectLocation.longitude,
+                                            username
+                                        )}
 
-                                    requestDataObject.add(RequestDataClass(distanceOneDP.toString()
-                                            + " kms, " + `object`.getString("username")))
+                                    if (requestDataClassToAdd != null) {
+                                        requestDataObject.add(requestDataClassToAdd)
+                                    }
+//                                    requestDataObject.add(RequestDataClass(distanceOneDP.toString()
+//                                            + " kms, " + `object`.getString("username")))
 //                                    Log.d("DEBUG", "A RequestDataClass object was added. Current size: " + requestDataObject.size)
 
 
@@ -199,6 +210,7 @@ class ViewRequestsActivity : AppCompatActivity() {
 //                                        )
 //                                    )
 //
+
 //                                    requestLatitudes.add(requestCurrentObjectLocation.latitude)
 //                                    requestLongitudes.add(requestCurrentObjectLocation.longitude)
 //                                    usernames.add(`object`.getString("username"))
