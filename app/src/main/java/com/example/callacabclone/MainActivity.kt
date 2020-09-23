@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+        Log.d("DEBUG", "Before on create user check")
         if(ParseUser.getCurrentUser() == null) {
 
             ParseAnonymousUtils.logIn(object: LogInCallback {
@@ -39,12 +40,13 @@ class MainActivity : AppCompatActivity() {
             if(ParseUser.getCurrentUser().get("riderOrDriver") != null ) {
                 Log.i("INFO", "Already logged in as: " + ParseUser.getCurrentUser().get("riderOrDriver"))
 
-                //redirectActivity()
+                redirectActivity()
             }
         }
     }
 
     fun redirectActivity() {
+        Log.d("DEBUG", ParseUser.getCurrentUser().toString())
         if (ParseUser.getCurrentUser().get("riderOrDriver") == "rider") {
             //Log.i("Test", "I reached here")
             val intent = Intent(applicationContext, RiderActivity::class.java)
@@ -57,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     fun startButton(view: View) {
 
-        Log.i("Switch Value", binding.loginSwitch.isChecked.toString())
+        Log.d("DEBUG", "Switch Value" + binding.loginSwitch.isChecked.toString())
 
 //        if(ParseUser.getCurrentUser().get("riderOrDriver") != null) {
 //            redirectActivity()
@@ -77,6 +79,11 @@ class MainActivity : AppCompatActivity() {
 
         currentUser.put("riderOrDriver", userType)
 
+        Log.d("DEBUG", "currentUser" + currentUser.toString())
+        Log.d("DEBUG", "currentUser" + currentUser.username)
+        Log.d("DEBUG", "currentUser" + currentUser.get("riderOrDriver"))
+
+        Log.d("DEBUG", "Just before signupcallback is called")
         currentUser.signUpInBackground(object: SignUpCallback {
             override fun done(e: ParseException?) {
                 Log.d("DEBUG", "Redirecting as $userType")

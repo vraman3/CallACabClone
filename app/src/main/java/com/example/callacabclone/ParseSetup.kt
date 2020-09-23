@@ -18,7 +18,7 @@ class ParseSetup: Application() {
         //bitnami password 2z4zc49SD0Pt
         //appId: "df510d952d8b4bc49dbef8dcf86380aa51117362",
         //masterKey: "551edc3f932c7e41cd8fbb03f6b9f1379bbb42dc",
-        //serverURL: "http://18.219.114.244:80/parse",
+        //serverURL: "http://3.14.28.9:80/parse",
 
         // Use for troubleshooting -- remove this line for production
         Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG)
@@ -44,7 +44,7 @@ class ParseSetup: Application() {
 //            .applicationId("df510d952d8b4bc49dbef8dcf86380aa51117362")
 //            .clientKey("551edc3f932c7e41cd8fbb03f6b9f1379bbb42dc")
 //            .clientBuilder(builder)
-//            .server("http://18.219.114.244:80/parse/")
+//            .server("http://3.14.28.9:80/parse/")
 //            .build()
 //        )
 
@@ -52,7 +52,7 @@ class ParseSetup: Application() {
         Parse.initialize(Parse.Configuration.Builder (this)
             .applicationId("df510d952d8b4bc49dbef8dcf86380aa51117362")
             .clientKey("551edc3f932c7e41cd8fbb03f6b9f1379bbb42dc")
-            .server("http://3.14.127.84:80/parse/")
+            .server("http://18.221.231.123:80/parse/")
             .build()
         )
 
