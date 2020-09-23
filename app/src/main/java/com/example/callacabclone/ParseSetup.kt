@@ -39,38 +39,38 @@ class ParseSetup: Application() {
 //        val client = builder.build()
 //        val client = Parse.Configuration.Builder( builder).build()
 
-//        // With OkHttp
-//        Parse.initialize(Parse.Configuration.Builder (this)
-//            .applicationId("df510d952d8b4bc49dbef8dcf86380aa51117362")
-//            .clientKey("551edc3f932c7e41cd8fbb03f6b9f1379bbb42dc")
-//            .clientBuilder(builder)
-//            .server("http://3.14.28.9:80/parse/")
-//            .build()
-//        )
-
-        // Without OkHttp
+        // With OkHttp
         Parse.initialize(Parse.Configuration.Builder (this)
             .applicationId("df510d952d8b4bc49dbef8dcf86380aa51117362")
             .clientKey("551edc3f932c7e41cd8fbb03f6b9f1379bbb42dc")
+            .clientBuilder(builder)
             .server("http://18.221.231.123:80/parse/")
             .build()
         )
 
+//        // Without OkHttp
+//        Parse.initialize(Parse.Configuration.Builder (this)
+//            .applicationId("df510d952d8b4bc49dbef8dcf86380aa51117362")
+//            .clientKey("551edc3f932c7e41cd8fbb03f6b9f1379bbb42dc")
+//            .server("http://18.221.231.123:80/parse/")
+//            .build()
+//        )
 
-//        val nameValueObject = ParseObject("NameValue")
-//        nameValueObject.put("name", "vish")
-//        nameValueObject.put("value", "9001")
-//        nameValueObject.put("etc","random field")
-//
-//        nameValueObject.saveInBackground {
-//            Log.d("DEBUG", "Object saved. Id: " + nameValueObject.objectId)
-//        }
+
+        val nameValueObject = ParseObject("NameValue")
+        nameValueObject.put("name", "vish")
+        nameValueObject.put("value", "9001")
+        nameValueObject.put("etc","random field")
+
+        nameValueObject.saveInBackground {
+            Log.d("DEBUG", "Object saved. Id: " + nameValueObject.objectId)
+        }
 
 //        ParseUser.enableAutomaticUser()
-        val defaultACL = ParseACL()
-        defaultACL.publicReadAccess = true // .setPublicReadAccess(true)
-        defaultACL.publicWriteAccess = true // setPublicWriteAccess(true)
-        ParseACL.setDefaultACL(defaultACL, true)
+//        val defaultACL = ParseACL()
+//        defaultACL.publicReadAccess = true // .setPublicReadAccess(true)
+//        defaultACL.publicWriteAccess = true // setPublicWriteAccess(true)
+//        ParseACL.setDefaultACL(defaultACL, true)
 
     }
 }

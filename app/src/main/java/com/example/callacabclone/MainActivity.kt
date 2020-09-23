@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             if(ParseUser.getCurrentUser().get("riderOrDriver") != null ) {
                 Log.i("INFO", "Already logged in as: " + ParseUser.getCurrentUser().get("riderOrDriver"))
 
-                redirectActivity()
+//                redirectActivity()
             }
         }
     }
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         currentUser.signUpInBackground(object: SignUpCallback {
             override fun done(e: ParseException?) {
                 Log.d("DEBUG", "Redirecting as $userType")
-                redirectActivity()
+//                redirectActivity()
             }
         })
 
